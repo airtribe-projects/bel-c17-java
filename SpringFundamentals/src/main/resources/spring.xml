@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--<beans xmlns="http://www.springframework.org/schema/beans"-->
+<!--       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--       xsi:schemaLocation="http://www.springframework.org/schema/beans-->
+<!--       http://www.springframework.org/schema/beans/spring-beans.xsd">-->
+<!--  <bean class="org.example.Car" id="car1">-->
+<!--    <constructor-arg value="red"></constructor-arg>-->
+<!--    <constructor-arg value="sedan"></constructor-arg>-->
+<!--    <constructor-arg ref="engine1"></constructor-arg>-->
+<!--  </bean>-->
+
+<!--  <bean class="org.example.Car" id="car2">-->
+<!--    <property name="color" value="blue"></property>-->
+<!--    <property name="carType" value="hatchback"></property>-->
+<!--    <property name="engine" ref="engine1"></property>-->
+<!--  </bean>-->
+
+<!--  <bean class="org.example.Engine" id="engine1">-->
+<!--    <constructor-arg value="1500"></constructor-arg>-->
+<!--    <constructor-arg value="V8"></constructor-arg>-->
+<!--  </bean>-->
+<!--</beans>-->
