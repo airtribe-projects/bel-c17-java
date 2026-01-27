@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.UniqueConstraint;
+import java.util.List;
 
 
 @Entity
@@ -17,6 +20,17 @@ public class Learner {
   private String learnerEmail;
 
   private String learnerPhone;
+
+  @ManyToMany(mappedBy = "learners")
+  private List<Cohort> cohorts;
+
+  public List<Cohort> getCohorts() {
+    return cohorts;
+  }
+
+  public void setCohorts(List<Cohort> cohorts) {
+    this.cohorts = cohorts;
+  }
 
   public Learner(Long learnerId, String learnerName, String learnerEmail, String learnerPhone) {
     this.learnerId = learnerId;
