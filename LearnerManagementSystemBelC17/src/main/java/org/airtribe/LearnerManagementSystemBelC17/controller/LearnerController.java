@@ -2,6 +2,7 @@ package org.airtribe.LearnerManagementSystemBelC17.controller;
 
 import java.util.List;
 import org.airtribe.LearnerManagementSystemBelC17.entity.Learner;
+import org.airtribe.LearnerManagementSystemBelC17.entity.LearnerDTO;
 import org.airtribe.LearnerManagementSystemBelC17.exception.LearnerNotFoundException;
 import org.airtribe.LearnerManagementSystemBelC17.exception.ValidationFailedException;
 import org.airtribe.LearnerManagementSystemBelC17.service.LearnerManagementService;
@@ -28,11 +29,12 @@ public class LearnerController {
   }
 
   @GetMapping("/learners")
-  public List<Learner> fetchAllLearners(
+  public List<LearnerDTO> fetchAllLearners(
       @RequestParam(value = "learnerName", required = false) String learnerName,
       @RequestParam(value = "learnerId", required = false) Long learnerId)
       throws LearnerNotFoundException, ValidationFailedException {
-    return _learnerManagementService.fetchLearnerComplexParams(learnerName, learnerId);
+    List<Learner> learners = _learnerManagementService.fetchLearnerComplexParams(learnerName, learnerId);
+    return _learnerManagementService.convertToLearnerDTO(learners);
   }
 
   @GetMapping("/learners/{learnerId}")

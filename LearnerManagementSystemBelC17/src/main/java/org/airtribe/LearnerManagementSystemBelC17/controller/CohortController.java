@@ -2,6 +2,7 @@ package org.airtribe.LearnerManagementSystemBelC17.controller;
 
 import java.util.List;
 import org.airtribe.LearnerManagementSystemBelC17.entity.Cohort;
+import org.airtribe.LearnerManagementSystemBelC17.entity.Learner;
 import org.airtribe.LearnerManagementSystemBelC17.exception.CohortNotFoundException;
 import org.airtribe.LearnerManagementSystemBelC17.exception.LearnerNotFoundException;
 import org.airtribe.LearnerManagementSystemBelC17.service.LearnerManagementService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,7 +37,12 @@ public class CohortController {
   @GetMapping("/cohorts")
   public List<Cohort> getAllCohorts() {
     return _learnerManagementService.fetchAllCohorts();
+  }
 
+  @PostMapping("/cohorts/{cohortId}/learners")
+  public Cohort assignAndCreateLearners(@PathVariable("cohortId") Long cohortId, @RequestBody List<Learner> learners)
+      throws CohortNotFoundException {
+    return _learnerManagementService.createAndAssignLearnersToCohort(cohortId, learners);
   }
 
   @ExceptionHandler(LearnerNotFoundException.class)
