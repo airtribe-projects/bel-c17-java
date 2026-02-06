@@ -16,6 +16,10 @@ import org.airtribe.LearnerManagementSystemBelC17.repository.CohortRepository;
 import org.airtribe.LearnerManagementSystemBelC17.repository.CourseRepository;
 import org.airtribe.LearnerManagementSystemBelC17.repository.LearnerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
@@ -43,8 +47,11 @@ public class LearnerManagementService {
     if (learnerId < 0) {
       throw new ValidationFailedException("Learner Id cannot be negative: " + learnerId);
     }
-    if (_learnerRepository.findById(learnerId).isPresent()) {
-      return _learnerRepository.findById(learnerId).get();
+
+    Optional<Learner> learnerOptional = _learnerRepository.findById(learnerId);
+
+    if (learnerOptional.isPresent()) {
+      return learnerOptional.get();
     }
    // Eating up an exception
 
@@ -154,6 +161,18 @@ public class LearnerManagementService {
 //    fetchecCohort.getLearners().addAll(managedLearners);
     fetchecCohort.getLearners().addAll(learners);
     return _cohortRepository.save(fetchecCohort);
+  }
+
+  public Page<Cohort> fetchPaginatedAndSortedCohorts(int pageSize, int pageNumber, String sortBy, String sortDir) {
+    Sort.Direction direction;
+    if (sortDir.equalsIgnoreCase("asc")) {
+      direction = Sort.Direction.ASC;
+    } else {
+      direction = Sort.Direction.DESC;
+    }
+
+    Pageable pageable = PageRequest.of(pageNumber, pageSize, direction, sortBy);
+    return _cohortRepository.findAll(pageable);
   }
 }
 

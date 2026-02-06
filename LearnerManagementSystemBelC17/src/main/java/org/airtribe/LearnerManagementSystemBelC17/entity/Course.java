@@ -64,3 +64,15 @@ public class Course {
     this.cohorts = cohorts;
   }
 }
+
+// Load
+// CPU
+/// Menotry
+// Thread count
+// Network bandwidfth
+
+// Latency
+// Error rate
+// Response times
+// Througput
+// Concurrent users

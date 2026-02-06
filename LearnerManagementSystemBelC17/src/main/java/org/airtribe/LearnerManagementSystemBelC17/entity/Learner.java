@@ -7,6 +7,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import java.util.List;
 
 
@@ -16,10 +20,17 @@ public class Learner {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long learnerId;
 
+  @NotNull
   private String learnerName;
 
+  @NotNull
+  @NotEmpty
+  @Email
   private String learnerEmail;
 
+  @NotNull
+  @NotEmpty(message = "Phone number cannot be empty")
+  @Positive(message = "Phone must be between 1 & 10")
   private String learnerPhone;
 
   @ManyToMany(mappedBy = "learners")
