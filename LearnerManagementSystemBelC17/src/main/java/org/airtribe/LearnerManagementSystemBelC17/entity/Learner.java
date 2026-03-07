@@ -1,6 +1,7 @@
 package org.airtribe.LearnerManagementSystemBelC17.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +27,7 @@ public class Learner {
   @NotNull
   @NotEmpty
   @Email
+  @Column(unique = true)
   private String learnerEmail;
 
   @NotNull
@@ -50,6 +52,21 @@ public class Learner {
     this.learnerName = learnerName;
     this.learnerEmail = learnerEmail;
     this.learnerPhone = learnerPhone;
+  }
+
+  public Learner(String learnerName, String learnerEmail, String learnerPhone, List<Cohort> cohorts) {
+    this.learnerName = learnerName;
+    this.learnerEmail = learnerEmail;
+    this.learnerPhone = learnerPhone;
+    this.cohorts = cohorts;
+  }
+
+  public Learner(Long learnerId, String learnerName, String learnerEmail, String learnerPhone, List<Cohort> cohorts) {
+    this.learnerId = learnerId;
+    this.learnerName = learnerName;
+    this.learnerEmail = learnerEmail;
+    this.learnerPhone = learnerPhone;
+    this.cohorts = cohorts;
   }
 
   public Learner() {

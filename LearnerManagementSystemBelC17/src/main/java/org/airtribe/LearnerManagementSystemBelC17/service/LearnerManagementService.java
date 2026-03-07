@@ -113,29 +113,6 @@ public class LearnerManagementService {
     return _cohortRepository.findAll();
   }
 
-  public List<LearnerDTO> convertToLearnerDTO(List<Learner> learners) {
-    List<LearnerDTO> learnerDTOS = new ArrayList<>();
-    for (Learner learner : learners) {
-      LearnerDTO learnerDTO = new LearnerDTO();
-      learnerDTO.setLearnerId(learner.getLearnerId());
-      learnerDTO.setLearnerEmail(learner.getLearnerEmail());
-      learnerDTO.setLearnerName(learner.getLearnerName());
-      learnerDTO.setLearnerPhone(learner.getLearnerPhone());
-      List<CohortDTO> cohortDTOS  = new ArrayList<>();
-      for (Cohort cohort: learner.getCohorts())  {
-        CohortDTO cohortDTO = new CohortDTO();
-        cohortDTO.setCohortId(cohort.getCohortId());
-        cohortDTO.setCohortName(cohort.getCohortName());
-        cohortDTO.setCohortDescription(cohort.getCohortDescription());
-        cohortDTOS.add(cohortDTO);
-      }
-      learnerDTO.setCohorts(cohortDTOS);
-      learnerDTOS.add(learnerDTO);
-    }
-
-    return learnerDTOS;
-  }
-
   public Course createCourse(Course course) {
     return _courseRepository.save(course);
   }

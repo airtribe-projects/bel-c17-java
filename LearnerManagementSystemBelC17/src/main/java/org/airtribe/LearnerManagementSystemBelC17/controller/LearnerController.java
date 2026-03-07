@@ -1,9 +1,12 @@
 package org.airtribe.LearnerManagementSystemBelC17.controller;
 
 import jakarta.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.airtribe.LearnerManagementSystemBelC17.entity.Cohort;
+import org.airtribe.LearnerManagementSystemBelC17.entity.CohortDTO;
 import org.airtribe.LearnerManagementSystemBelC17.entity.Learner;
 import org.airtribe.LearnerManagementSystemBelC17.entity.LearnerDTO;
 import org.airtribe.LearnerManagementSystemBelC17.exception.LearnerNotFoundException;
@@ -33,7 +36,6 @@ public class LearnerController {
 
   @PostMapping("/learners")
   public Learner createLearner(@Valid @RequestBody Learner learner) {
-
     return _learnerManagementService.createLearner(learner);
   }
 
@@ -43,7 +45,7 @@ public class LearnerController {
       @RequestParam(value = "learnerId", required = false) Long learnerId)
       throws LearnerNotFoundException, ValidationFailedException {
     List<Learner> learners = _learnerManagementService.fetchLearnerComplexParams(learnerName, learnerId);
-    return _learnerManagementService.convertToLearnerDTO(learners);
+    return convertToLearnerDTO(learners);
   }
 
   @GetMapping("/learners/{learnerId}")
@@ -71,6 +73,29 @@ public class LearnerController {
       errors.put(fieldName, errorMessage);
     });
     return ResponseEntity.status(400).body(errors);
+  }
+
+  public List<LearnerDTO> convertToLearnerDTO(List<Learner> learners) {
+    List<LearnerDTO> learnerDTOS = new ArrayList<>();
+    for (Learner learner : learners) {
+      LearnerDTO learnerDTO = new LearnerDTO();
+      learnerDTO.setLearnerId(learner.getLearnerId());
+      learnerDTO.setLearnerEmail(learner.getLearnerEmail());
+      learnerDTO.setLearnerName(learner.getLearnerName());
+      learnerDTO.setLearnerPhone(learner.getLearnerPhone());
+      List<CohortDTO> cohortDTOS  = new ArrayList<>();
+      for (Cohort cohort: learner.getCohorts())  {
+        CohortDTO cohortDTO = new CohortDTO();
+        cohortDTO.setCohortId(cohort.getCohortId());
+        cohortDTO.setCohortName(cohort.getCohortName());
+        cohortDTO.setCohortDescription(cohort.getCohortDescription());
+        cohortDTOS.add(cohortDTO);
+      }
+      learnerDTO.setCohorts(cohortDTOS);
+      learnerDTOS.add(learnerDTO);
+    }
+
+    return learnerDTOS;
   }
 
 //  @GetMapping("/learners/{learnerName}")
